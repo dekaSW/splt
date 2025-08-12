@@ -4,6 +4,13 @@ function splt({ target = '.splt', reveal = false }) {
   //grab instances
   const inst = document.querySelectorAll(target);
 
+  // MOD - support for html entity decoding
+  const decoded = function (encodedStr) {
+    let textarea = document.createElement('textarea')
+    textarea.innerHTML = encodedStr
+    return textarea.value
+  };
+
   for (let a = 0; a < inst.length; a++) {
     inst[a].setAttribute('id', 'i' + [a + 1]);
 
@@ -11,7 +18,7 @@ function splt({ target = '.splt', reveal = false }) {
     saveOriginal.push(inst[a].innerHTML);
 
     //split instance text
-    const instChars = inst[a].innerHTML.split('');
+    const instChars = decoded(inst[a].innerHTML).split('');
     for (let b = 0; b < instChars.length; b++) {
       //nest child span
       const span = document.createElement('span');
